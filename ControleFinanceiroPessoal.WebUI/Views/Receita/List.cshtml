@@ -1,0 +1,76 @@
+﻿@model IEnumerable<ControleFinanceiroPessoal.Domain.Entities.Receita>
+@using ControleFinanceiroPessoal.WebUI.ComponentsHelper;
+@using GridMvc.Html
+
+
+@{
+    ViewBag.Title = "Listar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Listar</h2>
+
+<p>
+    @CHtmlHelper.ActionLinkButtonIcon(@Url.Action("Create"), "btn btn-success", "glyphicon-plus", "Novo")
+</p>
+
+@if (Model != null) {
+    @Html.Grid(Model).Columns(columns => {
+    columns.Add(r => r.Descricao).Sortable(true).Filterable(true);
+    columns.Add(r => r.Valor).Sortable(true);
+    columns.Add(r => r.DataReferencia).Sortable(true);
+    columns.Add(r => r.DataCompetencia).Sortable(true);
+    columns.Add(r => r.IdTipoReceita).Sortable(true);
+}).WithPaging(20).Sortable().Filterable().WithMultipleFilters()
+}
+<div class="panel panel-default">
+    @*<div class="panel-heading">Panel heading</div>*@
+    <table class="table table-bordered table-responsive">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Descricao)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Valor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DataReferencia)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DataCompetencia)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdTipoReceita)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Descricao)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Valor)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DataReferencia)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DataCompetencia)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdTipoReceita)
+                </td>
+                <td class="text-center">
+                    @CHtmlHelper.ActionLinkButtonIcon(@Url.Action("Detalhes"), "btn btn-info", "glyphicon-list-alt", "")
+                    @CHtmlHelper.ActionLinkButtonIcon(@Url.Action("Editar"), "btn btn-warning", "glyphicon-pencil", "")
+                    @CHtmlHelper.ActionLinkButtonIcon(@Url.Action("Apagar"), "btn btn-danger", "glyphicon-trash", "")
+                </td>
+            </tr>
+        }
+
+    </table>
+    <div class="panel-footer">Receitas</div>
+</div>
+
